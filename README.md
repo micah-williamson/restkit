@@ -1,4 +1,4 @@
-[<img src="https://s32.postimg.org/wkxfzqv83/restkitexpress.png" height="200"/>](https://github.com/iamchairs/restkit)
+[<img src="https://s32.postimg.org/h9nmz4xw5/expresskit.png" height="200"/>](https://github.com/iamchairs/restkit)
 
 This is an experimental node rest server library using decorators.
 Developers using Java and C# frameworks are familiar with annotations when writing restful services.
