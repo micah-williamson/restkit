@@ -1,5 +1,4 @@
-Restkit
-==========
+!["Restkit"](https://s32.postimg.org/h9nmz4xw5/expresskit.png)
 
 This is an experimental node rest server library using decorators.
 Developers using Java and C# frameworks are familiar with annotations when writing restful services.
@@ -18,6 +17,8 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 [Express Support](#express)
 
 [Koa Support](#koa)
+
+[Hapi Support](#hapi)
 
 [Hello World Demo](#helloworld)
 
@@ -140,8 +141,11 @@ e.g. `import {Param} from 'expresskit' -> import {Param} from 'koakit'`
 
 Below are the support modules-
 
-<a name="express">Express</a>
-## Express Support
+<a name="express"></a>
+
+![Restkitexpress](https://s32.postimg.org/wkxfzqv83/restkitexpress.png "Restkitexpress")
+
+[Expresskit](https://github.com/iamchairs/expresskit)
 
 Restkit does not supply an http server. It adds annotations to your existing server.
 Express is one of the supported servers. To use Restkit with Express, you need to install
@@ -163,8 +167,11 @@ Restkit.start({
 });
 ```
 
-<a name="koa">Koa</a>
-## Koa Support
+<a name="koa"></a>
+
+![Restkitkoa](https://s32.postimg.org/lmqrvaw0j/restkitkoa.png "Restkitkoa")
+
+[Koakit](https://github.com/iamchairs/koakit)
 
 Restkit does not supply an http server. It adds annotations to your existing server.
 Koa is one of the supported servers. To use Restkit with Koa, you need to install
@@ -183,6 +190,32 @@ import {KoaServer} from 'koakit';
 
 Restkit.start({
   server: new KoaServer()
+});
+```
+
+<a name="hapi"></a>
+
+![Restkithapi](https://s32.postimg.org/pt70ww68j/expresskithapi.png "Restkithapi")
+
+[Hapikit](https://github.com/iamchairs/hapikit)
+
+Restkit does not supply an http server. It adds annotations to your existing server.
+Koa is one of the supported servers. To use Restkit with Hapi, you need to install
+Hapikit alongside Restkit.
+
+```
+npm install --save hapikit
+```
+
+Once Hapikit is installed, you can tell Restkit to tie into the request/response of
+the server by provided an instance of the `HapiServer` to the Restkit `start` method.
+
+```typescript
+import {Restkit} from 'restkit';
+import {HapiServer} from 'hapikit';
+
+Restkit.start({
+  server: new HapiServer()
 });
 ```
 
