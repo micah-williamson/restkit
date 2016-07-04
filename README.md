@@ -126,7 +126,7 @@ node index.js
 <a name="serversupport">Server Support</a>
 
 Restkit does not supply an http server. It adds annotations to your existing server.
-A server support module should be installed along-side Reskit. These support modules
+A server support module should be installed along-side Restkit. These support modules
 provide the specific implementation of that frameworks request/response model. The
 support module will also provide additional injectables that require a specific
 implementation of that server framework. Examples of those would be `Param`, `Query`,
@@ -144,7 +144,7 @@ Below are the support modules-
 ## Express Support
 
 Restkit does not supply an http server. It adds annotations to your existing server.
-Express is one of the supported servers. To use Reskit with Express, you need to install
+Express is one of the supported servers. To use Restkit with Express, you need to install
 Expresskit alongside Restkit.
 
 ```
@@ -155,7 +155,7 @@ Once Expresskit is installed, you can tell Restkit to tie into the request/respo
 the server by provided an instance of the `ExpressServer` to the Restkit `start` method.
 
 ```typescript
-import {Reskit} from 'restkit';
+import {Restkit} from 'restkit';
 import {ExpressServer} from 'expresskit';
 
 Restkit.start({
@@ -167,7 +167,7 @@ Restkit.start({
 ## Koa Support
 
 Restkit does not supply an http server. It adds annotations to your existing server.
-Koa is one of the supported servers. To use Reskit with Koa, you need to install
+Koa is one of the supported servers. To use Restkit with Koa, you need to install
 Koakit alongside Restkit. (Don't confuse `koakit` with `koa-kit`).
 
 ```
@@ -178,7 +178,7 @@ Once Koakit is installed, you can tell Restkit to tie into the request/response 
 the server by provided an instance of the `KoaServer` to the Restkit `start` method.
 
 ```typescript
-import {Reskit} from 'restkit';
+import {Restkit} from 'restkit';
 import {KoaServer} from 'koakit';
 
 Restkit.start({
