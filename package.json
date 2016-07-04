@@ -1,0 +1,46 @@
+{
+  "name": "restkit",
+  "version": "0.1.0",
+  "description": "a rest toolkit for node servers",
+  "main": "bld/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "http",
+    "express",
+    "koa",
+    "hapi",
+    "server",
+    "toolkit",
+    "authorization",
+    "authentication",
+    "roles",
+    "resources",
+    "dto",
+    "rule",
+    "decorator",
+    "annotation"
+  ],
+  "author": "Micah Williamson",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "koa": "^2.0.0",
+    "koa-bodyparser": "^2.2.0",
+    "koa-router": "^7.0.1",
+    "request": "^2.72.0",
+    "body-parser": "^1.15.1",
+    "compression": "^1.6.2",
+    "express": "^4.13.4"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamchairs/restkit.git"
+  }
+}

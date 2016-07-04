@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "none",
+    "moduleResolution": "node",
+    "declaration": false,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "noLib": false,
+    "experimentalDecorators": true,
+    "outDir": "bld"
+  },
+  "files": [
+    "index.ts"
+  ]
+}

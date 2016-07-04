@@ -1,0 +1,1 @@
+export {RestkitRouter} from './router';
