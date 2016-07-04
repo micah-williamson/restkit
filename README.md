@@ -1,4 +1,4 @@
-<img src="https://s32.postimg.org/wkxfzqv83/restkitexpress.png" height="200"/>
+[<img src="https://s32.postimg.org/wkxfzqv83/restkitexpress.png" height="200"/>](https://github.com/iamchairs/restkit)
 
 This is an experimental node rest server library using decorators.
 Developers using Java and C# frameworks are familiar with annotations when writing restful services.
@@ -145,6 +145,8 @@ Below are the support modules-
 
 [<img src="https://s32.postimg.org/wkxfzqv83/restkitexpress.png" height="100"/>](https://github.com/iamchairs/expresskit)
 
+---
+
 Restkit does not supply an http server. It adds annotations to your existing server.
 Express is one of the supported servers. To use Restkit with Express, you need to install
 Expresskit alongside Restkit.
@@ -169,7 +171,7 @@ Restkit.start({
 
 [<img src="https://s32.postimg.org/lmqrvaw0j/restkitkoa.png" height="100"/>](https://github.com/iamchairs/koakit)
 
-[Koakit]()
+---
 
 Restkit does not supply an http server. It adds annotations to your existing server.
 Koa is one of the supported servers. To use Restkit with Koa, you need to install
@@ -194,6 +196,8 @@ Restkit.start({
 <a name="hapi"></a>
 
 [<img src="https://s32.postimg.org/pt70ww68j/expresskithapi.png" height="100"/>](https://github.com/iamchairs/hapikit)
+
+---
 
 Restkit does not supply an http server. It adds annotations to your existing server.
 Koa is one of the supported servers. To use Restkit with Hapi, you need to install
