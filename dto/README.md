@@ -55,7 +55,7 @@ validation rule becomes a tuple, where the first item in the array is the rule,
 and the second is the failing message.
 
 ```typescript
-import {Validate} from 'restkit/dto';
+import {Validate} from 'expresskit';
 
 export class User {
   // With custom message
@@ -99,7 +99,7 @@ You may want to scrub data coming in and going out. When data is scrubbed in, us
 Use `ScrubIn` for **Read-Only** properties. 
 
 ```typescript
-import {ScrubIn} from 'restkit/dto';
+import {ScrubIn} from 'expresskit';
 
 public class User {
   public id: string;
@@ -119,7 +119,7 @@ use the `ResponseType` decorator on your route. Without ResponseType, the route 
 determine you are responding with a DTO.
 
 ```typescript
-import {ScrubOut, ResponseType} from 'restkit/dto';
+import {ScrubOut, ResponseType} from 'expresskit';
 
 public class User {
   public id: string;

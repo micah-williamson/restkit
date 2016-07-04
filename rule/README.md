@@ -32,10 +32,7 @@ from the route context. A RuleHandler must be given a name, this name should
 describe the rule being performed.
 
 ```typescript
-import {Auth} from 'restkit/auth';
-import {Body} from 'restkit/property';
-import {RuleHandler} from 'restkit/rule';
-import {Response} from 'restkit/route';
+import {Auth, Body, RuleHandler, Response} from 'expresskit';
 
 export class UserService {
   @RuleHandler('IsUserOwner')

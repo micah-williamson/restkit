@@ -9,7 +9,6 @@ import {fatal} from './error';
 export interface IRestkitConfig {
   server: RestkitServer;
   port?: number;
-  compression?: boolean;
   timezone?: string;
   staticFiles?: IStaticUriPath[];
   staticPaths?: IStaticUriPath[];
@@ -26,7 +25,6 @@ export class Restkit {
     this.config = config;
     
     config.port = config.port || 8000;
-    config.compression = !!config.compression;
     config.timezone = config.timezone || 'Z';
     config.staticFiles = config.staticFiles || [];
     config.staticPaths = config.staticPaths || [];

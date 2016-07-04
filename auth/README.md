@@ -1,7 +1,6 @@
 Auth
 ----
 
-
 Auth behaves by resolving some sort of authorization value for the route. Because
 it could be used to generically resolve anything, Auth will eventually become `Resolution`.
 However, the behavior will largely remain the same. 
@@ -35,8 +34,7 @@ properties from the route. Because of this, we can use decorators like `Header` 
 get the Authorization header of the request.
 
 ```typescript
-import {AuthHandler} from 'restkit/auth';
-import {Header} from 'restkit/property';
+import {AuthHandler, Header} from 'expresskit';
 
 export class AuthService {
   @AuthHandler('User')
@@ -52,8 +50,7 @@ and return some information about *who* is making the request. With this we can 
 use the `Auth` decorator to authenticate our routes.
 
 ```typescript
-import {Auth} from 'restkit/auth';
-import {Route} from 'restkit/route';
+import {Auth, Route} from 'expresskit';
 
 // Make sure the compiler knows to include this at some point since we don't
 // directly call any methods on AuthService

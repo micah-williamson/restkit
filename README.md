@@ -18,8 +18,6 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [Koa Support](#koa)
 
-[Hapi Support](#hapi)
-
 [Hello World Demo](#helloworld)
 
 **Restkit**
@@ -135,7 +133,7 @@ implementation of that server framework. Examples of those would be `Param`, `Qu
 
 Throughout this readme, `Expresskit` will be the assumed support module. The differences
 between the support modules are only in their source, so if you are following along with
-a different support module, the only difference is import name.
+a different support module, the only difference for your would be the import name.
 
 e.g. `import {Param} from 'expresskit' -> import {Param} from 'koakit'`
 
@@ -147,24 +145,25 @@ Below are the support modules-
 
 ---
 
-Restkit does not supply an http server. It adds annotations to your existing server.
-Express is one of the supported servers. To use Restkit with Express, you need to install
-Expresskit alongside Restkit.
+To use Express with Restkit, you need to install Expresskit. Expresskit exports Restkit
+modules. So where you would import `Route` via `restkit`, you can import `Route` via
+`expresskit`.
+
+`import {Route} from 'restkit' -> import {Route} from 'expresskit'`
+
+This isn't mandatory, only a convenience.
 
 ```
 npm install --save expresskit
 ```
 
-Once Expresskit is installed, you can tell Restkit to tie into the request/response of
-the server by provided an instance of the `ExpressServer` to the Restkit `start` method.
+Once Expresskit is installed, you can use Expresskit in the same way you'd use Restkit.
+The `server` option is defaulted to `ExpressServer`.
 
 ```typescript
-import {Restkit} from 'restkit';
-import {ExpressServer} from 'expresskit';
+import {Expresskit} from 'expresskit';
 
-Restkit.start({
-  server: new ExpressServer()
-});
+Expresskit.start();
 ```
 
 <a name="koa"></a>
@@ -173,50 +172,27 @@ Restkit.start({
 
 ---
 
-Restkit does not supply an http server. It adds annotations to your existing server.
-Koa is one of the supported servers. To use Restkit with Koa, you need to install
-Koakit alongside Restkit. (Don't confuse `koakit` with `koa-kit`).
+To use Koa with Restkit, you need to install Koakit. Koakit exports Restkit
+modules. So where you would import `Route` via `restkit`, you can import `Route` via
+`koakit`.
+
+`import {Route} from 'restkit' -> import {Route} from 'koakit'`
+
+This isn't mandatory, only a convenience.
 
 ```
 npm install --save koakit
 ```
 
-Once Koakit is installed, you can tell Restkit to tie into the request/response of
-the server by provided an instance of the `KoaServer` to the Restkit `start` method.
+**NOTE: Don't confused the `koakit` npm package with `koa-kit`!**
+
+Once Koakit is installed, you can use Koakit in the same way you'd use Restkit.
+The `server` option is defaulted to `KoaServer`.
 
 ```typescript
-import {Restkit} from 'restkit';
-import {KoaServer} from 'koakit';
+import {Koakit} from 'koakit';
 
-Restkit.start({
-  server: new KoaServer()
-});
-```
-
-<a name="hapi"></a>
-
-[<img src="https://s32.postimg.org/ydpbr05v9/expresskithapi.png" height="100"/>](https://github.com/iamchairs/hapikit)
-
----
-
-Restkit does not supply an http server. It adds annotations to your existing server.
-Koa is one of the supported servers. To use Restkit with Hapi, you need to install
-Hapikit alongside Restkit.
-
-```
-npm install --save hapikit
-```
-
-Once Hapikit is installed, you can tell Restkit to tie into the request/response of
-the server by provided an instance of the `HapiServer` to the Restkit `start` method.
-
-```typescript
-import {Restkit} from 'restkit';
-import {HapiServer} from 'hapikit';
-
-Restkit.start({
-  server: new HapiServer()
-});
+Koakit.start();
 ```
 
 <a name="helloworld"></a>
@@ -238,13 +214,10 @@ In our `index.ts` we just need to start the Restkit and tell it to import the
 HelloWorldRouter.
 
 ```typescript
-import {Restkit} from 'restkit';
-import {ExpressServer} from 'expresskit';
+import {Expresskit} from 'expresskit';
 import 'hello/router';
 
-Restkit.start({
-  server: new ExpressServer() 
-});
+Expresskit.start();
 ```
 
 When an Restkit server is started, it will default to port `8000`. This can
@@ -261,7 +234,7 @@ To create a **Route** on the HelloWorldRouter, we need to import `Route` from
 server.
 
 ```typescript
-import {Route} from 'restkit';
+import {Route} from 'expresskit';
 
 export class HelloWorldRouter {
 
@@ -284,12 +257,12 @@ Restkit and it's many features? Keep reading!
 
 There are a few configurable properties when you start the server. These options
 are application wide properties. To add startup options, just pass a json object
-to the `Restkit.start` method.
+to the `Expresskit.start` method.
 
 ```typescript
-import Restkit from 'restkit';
+import Expresskit from 'expresskit';
 
-Restkit.start({
+Expressskit.start({
   ... options go here
 });
 ```
@@ -298,7 +271,6 @@ Possible options are-
 
 | Option      | Description                                                                                                                                  | Default    |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| server      | An instance of the server from the server support module. **Required**                                                                       | null       |
 | port        | The port the server listens to for incoming requests.                                                                                        | 8000       |
 | timezone    | The default timezone of the application. Sets `process.env.TZ` to this property for convenience.                                             | TZ (GMT 0) |
 | staticFiles | An array of files and their URIs to serve statically when requested.                                                                         | []         |
@@ -337,8 +309,7 @@ We can use staticFiles to point `/` and `/index.html` to the client index file.
 And we can use staticPaths to point `/images` to the client's image assets directory.
 
 ```typescript
-Restkit.start({
-  server: new ExpressServer(),
+Expresskit.start({
   staticFiles: [
     {uri: '/', path: '../client/index.html'},
     {uri: '/index.html', path: '../client/index.html'}
@@ -370,13 +341,11 @@ An example of when you'd want to use this is for body parsers.
 ```typescript
 declare var require: any;
 
-import {Restkit} from 'restkit';
-import {ExpressServer} from 'expresskit';
+import {Expresskit} from 'expresskit';
 
 let bodyParser = require('body-parser');
  
-Restkit.start({
-  server: new ExpressServer(),
+Expresskit.start({
   middleware: [
     bodyParser() 
   ]

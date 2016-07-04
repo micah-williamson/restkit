@@ -1,6 +1,6 @@
 {
   "name": "restkit",
-  "version": "0.1.1",
+  "version": "0.6.0",
   "description": "a rest toolkit for node servers",
   "main": "bld/index.js",
   "scripts": {
@@ -26,16 +26,7 @@
   ],
   "author": "Micah Williamson",
   "license": "MIT",
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "koa": "^2.0.0",
-    "koa-bodyparser": "^2.2.0",
-    "koa-router": "^7.0.1",
-    "request": "^2.72.0",
-    "body-parser": "^1.15.1",
-    "compression": "^1.6.2",
-    "express": "^4.13.4"
-  },
+  "devDependencies": {},
   "dependencies": {
     "reflect-metadata": "^0.1.3"
   },

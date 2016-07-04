@@ -29,7 +29,7 @@ PUT, POST, and DELETE route.
 ```
 
 ```typescript
-import Route from 'restkit/route';
+import {Route} from 'expresskit';
 
 export default class UserRouter {
   @Route('GET', '/user/:id')
@@ -71,17 +71,19 @@ will wait for the promise to be resolved or rejected before responding to the cl
 
 
 ```typescript
-@Route('GET', '/user:id')
-public static getUser(): Promise<Object> {
-  return new Promise((resolve, reject) => {
-    // Do something asynchronous
+export default class UserRouter {
+  @Route('GET', '/user/:id')
+  public static getUser(): Promise<Object> {
+    return new Promise((resolve, reject) => {
+      // Do something asynchronous
 
-    // On success:
-    resolve({});
+      // On success:
+      resolve({});
 
-    // On fail:
-    reject('Something went wrong');
-  });
+      // On fail:
+      reject('Something went wrong');
+    });
+  }
 }
 ```
 
@@ -120,28 +122,29 @@ used:
 <a name="injectables"></a>
 ## Injectables
 
-With vanilla Express you are given the request and the response. In Restkit routes
+With vanilla Express you are given the request and the response. In **Restkit** routes
 you don't have access to the response and should only use the request if working with
 not-yet-supported 3rd party middleware. More on that in the `Middleware` section.
-Instead you inject the properties of a request you want to use. Injectables are an
+Instead you should inject the properties of a request you want to use. Injectables are an
 important part of Restkit and one of the primary reasons for it's existance.
 There are four basic injectables, `Param`, `Query`, `Body`, and `Header`. To use
 them, you can decorator parameters in the method.
 
 ```typescript
-import {Route} from 'restkit/route';
-import {Param, Query, Body, Header} from 'expresskit';
+import {Route, Param, Query, Body, Header} from 'expresskit';
 
-@Route('GET', '/user/search/:page')
-public static searchUsers(@Param('page') page: number, @Query('q') search: string): Promise<Object> {
-  console.log('On page: ' + page);
-  console.log('Search term: ' + search);
-}
+export default class UserRouter {
+  @Route('GET', '/user/search/:page')
+  public static searchUsers(@Param('page') page: number, @Query('q') search: string): Promise<Object> {
+    console.log('On page: ' + page);
+    console.log('Search term: ' + search);
+  }
 
-@Route('PUT', '/user')
-public static updateUser(@Header('Authorization') auth: string, @Body(): update: any) {
-  if(auth === update.id) {
-    // not secure. dont actually do this
+  @Route('PUT', '/user')
+  public static updateUser(@Header('Authorization') auth: string, @Body(): update: any) {
+    if(auth === update.id) {
+      // not secure. dont actually do this
+    }
   }
 }
 ```
@@ -169,16 +172,20 @@ and a message similar to-
 `Query` and `Header` params can be made conditional by appending `?` to the name.
 
 ```typescript
-public static conditionalProperties(@Header('Authorization?') auth: string, @Query('q?') q: string) {
-  // Optional Header and Query
+export default class UserRouter {
+  public static conditionalProperties(@Header('Authorization?') auth: string, @Query('q?') q: string) {
+    // Optional Header and Query
+  }
 }
 ```
 
 Alternatively, using `=`, a default value can be given if they aren't present in the request.
 
 ```typescript
-public static conditionalProperties(@Header('Authorization=foo') auth: string, @Query('q=bar') q: string) {
-  // Optional Header and Query
+export default class UserRouter {
+  public static conditionalProperties(@Header('Authorization=foo') auth: string, @Query('q=bar') q: string) {
+    // Optional Header and Query
+  }
 }
 ```
 
@@ -195,7 +202,7 @@ Middleware). By defining a router you can set the `base path` for the routes def
 in the router class.
 
 ```typescript
-import {Route, Router} from 'restkit/route';
+import {Route, Router} from 'expresskit';
 
 @Router('/user')
 export class UserRouter {

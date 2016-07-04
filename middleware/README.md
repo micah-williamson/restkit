@@ -1,7 +1,7 @@
 Middleware
 ----------
 
-A late addition to the party, `Middleware` is an important feature of vanilla Express that
+A late addition to the party, `Middleware` is an important feature of vanilla Express/Koa that
 provides 3rd party plugins for your server application. It works by chaining operations
 through a `next` callback before finally hitting your route function.
 
@@ -28,8 +28,7 @@ from the Express site, we need to pass the middleware function to the decorator.
 ```typescript
 declare let require: any;
 
-import {Route} from 'restkit/route';
-import {RouteMiddleware} from 'restkit/middleware';
+import {Route, RouteMiddleware} from 'expresskit';
 
 let cookieParser = require('cookie-parser');
 
@@ -45,7 +44,7 @@ writing this, `Cookie` is not available as an injectable. In this case we can
 use the `@Context` decorator to get the the express request and use this middleware.
 
 ```typescript
-import {Context} from 'restkit/property';
+import {Route, RouteMiddleware, Context} from 'expresskit';
 
 export class UserRouter {
   @Route('GET', '/user/:id')
@@ -67,9 +66,7 @@ mentioned in the [Router](/route/README.md#router) section of the routes README.
 ```typescript
 declare let require: any;
 
-import {Route} from 'restkit/route';
-import {Context} from 'restkit/property';
-import {RouterMiddleware} from 'restkit/middleware';
+import {Route, RouterMiddleware, Context} from 'expresskit';
 
 let cookieParser = require('cookie-parser');
 
