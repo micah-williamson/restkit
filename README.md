@@ -13,6 +13,12 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [tsconfig](#tsconfig)
 
+[Server Support](#serversupport)
+
+[Express Support](#express)
+
+[Koa Support](#koa)
+
 [Hello World Demo](#helloworld)
 
 **Restkit**
@@ -21,7 +27,7 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [Static Content](#staticcontent)
 
-[Koa](#koa)
+[Middleware](#middleware)
 
 **Routing**
 
@@ -117,8 +123,73 @@ node index.js
 }
 ```
 
+<a name="serversupport">Server Support</a>
+
+Restkit does not supply an http server. It adds annotations to your existing server.
+A server support module should be installed along-side Reskit. These support modules
+provide the specific implementation of that frameworks request/response model. The
+support module will also provide additional injectables that require a specific
+implementation of that server framework. Examples of those would be `Param`, `Query`,
+`Header`, and `Body`.
+
+Throughout this readme, `Expresskit` will be the assumed support module. The differences
+between the support modules are only in their source, so if you are following along with
+a different support module, the only difference is import name.
+
+e.g. `import {Param} from 'expresskit' -> import {Param} from 'koakit'`
+
+Below are the support modules-
+
+<a name="express">Express</a>
+## Express Support
+
+Restkit does not supply an http server. It adds annotations to your existing server.
+Express is one of the supported servers. To use Reskit with Express, you need to install
+Expresskit alongside Restkit.
+
+```
+npm install --save expresskit
+```
+
+Once Expresskit is installed, you can tell Restkit to tie into the request/response of
+the server by provided an instance of the `ExpressServer` to the Restkit `start` method.
+
+```typescript
+import {Reskit} from 'restkit';
+import {ExpressServer} from 'expresskit';
+
+Restkit.start({
+  server: new ExpressServer()
+});
+```
+
+<a name="koa">Koa</a>
+## Koa Support
+
+Restkit does not supply an http server. It adds annotations to your existing server.
+Koa is one of the supported servers. To use Reskit with Koa, you need to install
+Koakit alongside Restkit. (Don't confuse `koakit` with `koa-kit`).
+
+```
+npm install --save koakit
+```
+
+Once Koakit is installed, you can tell Restkit to tie into the request/response of
+the server by provided an instance of the `KoaServer` to the Restkit `start` method.
+
+```typescript
+import {Reskit} from 'restkit';
+import {KoaServer} from 'koakit';
+
+Restkit.start({
+  server: new KoaServer()
+});
+```
+
 <a name="helloworld"></a>
-## Hello World Demo
+## Hello World Demo (with ExpressServer)
+
+Restkit does not have an http server on it's own.
 
 The index of your restkit server will need to import the routers you will be using as well as providing the basic configuration of the server.
 In this hello world example, we will have a hello component and router in a `/hello` directory.
@@ -134,10 +205,13 @@ In our `index.ts` we just need to start the Restkit and tell it to import the
 HelloWorldRouter.
 
 ```typescript
-import Restkit from 'restkit';
+import {Restkit} from 'restkit';
+import {ExpressServer} from 'expresskit';
 import 'hello/router';
 
-Restkit.start();
+Restkit.start({
+  server: new ExpressServer() 
+});
 ```
 
 When an Restkit server is started, it will default to port `8000`. This can
@@ -154,7 +228,7 @@ To create a **Route** on the HelloWorldRouter, we need to import `Route` from
 server.
 
 ```typescript
-import {Route} from 'restkit/route';
+import {Route} from 'restkit';
 
 export class HelloWorldRouter {
 
@@ -169,7 +243,7 @@ export class HelloWorldRouter {
 Now if we build the server, start it, and go to
 `http://localhost:8000/hello`, we will get the response "Hello World".
 
-Want more examples? See the [Restkit Seed Project](https://github.com/iamchairs/restkit-seed). Want to learn more about
+Want more examples? See the [Expresskit Seed Project](https://github.com/iamchairs/expresskit-seed). Want to learn more about
 Restkit and it's many features? Keep reading!
 
 <a name="startupoptions"></a>
@@ -191,11 +265,12 @@ Possible options are-
 
 | Option      | Description                                                                                                                                  | Default    |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| server      | An instance of the server from the server support module. **Required**                                                                       | null       |
 | port        | The port the server listens to for incoming requests.                                                                                        | 8000       |
-| compression | Adds application-wide compression to responses.                                                                                              | false      |
 | timezone    | The default timezone of the application. Sets `process.env.TZ` to this property for convenience.                                             | TZ (GMT 0) |
 | staticFiles | An array of files and their URIs to serve statically when requested.                                                                         | []         |
 | staticPaths | An array of paths and their URIs to serve statically when requested. All files and child directories of this path will be served statically. | []         |
+| middleware  | An array of application-wide middleware functions. (This is where your body parsers will go.)                                                | []         |
 
 <a name="staticcontent"></a>
 ## Static Content
@@ -230,6 +305,7 @@ And we can use staticPaths to point `/images` to the client's image assets direc
 
 ```typescript
 Restkit.start({
+  server: new ExpressServer(),
   staticFiles: [
     {uri: '/', path: '../client/index.html'},
     {uri: '/index.html', path: '../client/index.html'}
@@ -250,47 +326,29 @@ http://localhost:8000/index.html
 http://localhost:8000/images/fooimage.jpg
 ```
 
-<a name="koa"></a>
-## Koa
+<a name="middleware"></a>
+## Middleware
 
-This branch has experimental Koa support. It was written to handle `koa 1.2` and `koa-router 5.4`
-initially but switched at the last moment to `koa 2` and `koa-router 7`. With that said, the code is
-in a hackish state at the moment.
+In the middleware section of the README you can provide middleware for specific routes
+and routers. To add middleware to the entire application, use the `middleware` option.
 
-Restkit still comes installed with `express`. To use Koa you will need to install `koa` and
-`koa-router`.
+An example of when you'd want to use this is for body parsers.
 
-```
-npm install koa@2 --save
-npm install koa-router@7 --save
-```
-
-In the `index.ts` file, you can choose Koa by providing the `koa` and `koa-router` packages in
-the `start` method. 
-
-The default `express` configuration comes with body parser middlewares. By default, Koa does not.
-To add the body parser middleware include it in the `middleware` array in the start options.
-
-```
+```typescript
 declare var require: any;
 
-let koa = require('koa');
-let koaRouter = require('koa-router');
-let koaBodyParser = require('koa-bodyparser');
+import {Restkit} from 'restkit';
+import {ExpressServer} from 'expresskit';
 
-import Restkit from 'restkit';
-import {KoaServer} from 'restkit/server';
-
+let bodyParser = require('body-parser');
+ 
 Restkit.start({
-  server: new KoaServer(koa, koaRouter),
+  server: new ExpressServer(),
   middleware: [
-   koaBodyParser() 
+    bodyParser() 
   ]
 });
 ```
-
-Not a whole lot of testing has been done for Koa. But the unit tests pass- so that's a good
-sign.
 
 ## Keep Reading
 

@@ -12,9 +12,9 @@ Routing
 <a name="thebasics"></a>
 ## The Basics
 
-Under the hood, Restkit is using Express for routing. So where an Restkit route
-is defined it will get bound to an Express application, letting us use features and
-hardwork Express has already given us
+Under the hood, Restkit is using the support module for routing. So where an Restkit route
+is defined it will get bound to an Express/Koa/Etc application, letting us use the features and
+hardwork these server frameworks have already given us
 
 To define a route you will need to use the `@Route` decorator which can be imported
 from `restkit/route`. A Route is defined by the http method, and uri. We will setup
@@ -130,7 +130,7 @@ them, you can decorator parameters in the method.
 
 ```typescript
 import {Route} from 'restkit/route';
-import {Param, Query, Body, Header} from 'restkit/property';
+import {Param, Query, Body, Header} from 'expresskit';
 
 @Route('GET', '/user/search/:page')
 public static searchUsers(@Param('page') page: number, @Query('q') search: string): Promise<Object> {
