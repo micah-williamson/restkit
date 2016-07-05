@@ -1,5 +1,5 @@
 import {fatal} from '../error';
-import {Response} from '../route/response';
+import {Response, ResponseService} from '../response';
 import {IRoute} from '../route/manager';
 import {InjectorService} from '../injector/service';
 
@@ -78,7 +78,7 @@ export class RuleService {
         let promise = new Promise((branchResolve, branchReject) => {
           // Rule branches are OR operations. One pass succeeds
           InjectorService.run(handler.object, handler.method, context).then((response: any) => {
-            if(response instanceof Response && (<Response>response).httpCode >= 400) {
+            if(response instanceof Response && ResponseService.isError(response)) {
               branchReject(response);
             } else {
               resolve();

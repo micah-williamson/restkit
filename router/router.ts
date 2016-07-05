@@ -13,5 +13,7 @@ export abstract class RestkitRouter {
 
   public abstract post (... args: any[]): any;
 
+  public abstract patch (... args: any[]): any;
+
   public abstract delete (... args: any[]): any;
 }

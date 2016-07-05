@@ -1,5 +1,5 @@
 import {Reflect} from '../reflect';
-import {Response, ResponseType} from '../route/response';
+import {Response, ResponseService} from '../response';
 
 import {Injection, IInjectable, IInjectionConfig, IInjectionResolver} from './';
 
@@ -18,7 +18,7 @@ export class InjectorService {
       let injection = <Injection>Reflect.getMetadata('Injection', object, method) || [];
 
       this.resolveInjection(injection, context).then((response: Response) => {
-        if(response.type === ResponseType.Success) {
+        if(ResponseService.isSuccess(response)) {
           let methodResult = object[method].apply(object, response.data);
           resolve(methodResult);
         } else {

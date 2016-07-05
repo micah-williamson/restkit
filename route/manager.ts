@@ -5,13 +5,12 @@ import {Reflect} from '../reflect';
 
 import {IStaticUriPath} from './static';
 import {RestkitServer} from '../server';
-import {AuthManager} from '../auth/manager';
 import {RestkitRouter} from '../router';
 import {fatal} from '../error';
 
 var path = require('path');
 
-export type RouteMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type RouteMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface IRouter {
   mount: string;
@@ -199,6 +198,8 @@ export class RouteManager {
         return application.post;
       case 'DELETE':
         return application.delete;
+      case 'PATCH':
+        return application.patch;
     }
 
     return;
