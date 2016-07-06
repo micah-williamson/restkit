@@ -95,7 +95,7 @@ export default class UserRouter {
     return;
   }
 
-  @ROUTE('/user')
+  @DELETE('/user')
   public static deleteUser(): string {
     return 'User Deleted';
   }
