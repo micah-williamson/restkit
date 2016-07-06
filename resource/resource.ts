@@ -30,14 +30,14 @@ export class ResourceResolver implements IInjectionResolver {
       resolver = ResolutionManager.getResolverByName(name);
 
       InjectorService.run(resolver.object, resolver.method, request).then((response: Response) => {
-          if(response instanceof Response && ResponseService.isError(response)) {
-            reject(response);
+          if(ResponseService.isError(response)) {
+            reject(ResponseService.convertErrorResponse(response, resolver.object, resolver.method));
           } else {
-            resolve(response);
+            resolve(ResponseService.convertSuccessResponse(response, resolver.object, resolver.method));
           }
         })
         .catch((response: any) => {
-          reject(ResponseService.convertErrorResponse(response));
+          reject(ResponseService.convertErrorResponse(response, resolver.object, resolver.method));
         });
     });
   }

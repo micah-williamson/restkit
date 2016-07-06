@@ -22,7 +22,7 @@ export class InjectorService {
           throw response;
         }
         
-        let methodResult = object[method].apply(object, response.data);
+        let methodResult = object[method].apply(object, response);
 
         if(methodResult instanceof Promise) {
           return methodResult;
@@ -49,7 +49,16 @@ export class InjectorService {
     });
 
     return Promise.all(returnPromises).then((values: any[]) => {
-      return values;
+      let returnValues: any[] = [];
+      values.forEach((value) => {
+        if(value instanceof Response) {
+          returnValues.push(value.data);
+        } else {
+          returnValues.push(value);
+        }
+      });
+
+      return returnValues;
     });
   }
 
