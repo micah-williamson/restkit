@@ -141,9 +141,11 @@ export class UserRouter {
 
 [Routing](/route/README.md)
 
+[Response](/response/README.md)
+
 [Middleware](/middleware/README.md)
 
-[Auth](/auth/README.md)
+[Resource Resolutions](/resource/README.md)
 
 [Rules](/rule/README.md)
 

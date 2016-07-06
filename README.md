@@ -1,5 +1,17 @@
 [<img src="https://s32.postimg.org/d2rrmqnqt/expresskit.png"/>](https://github.com/iamchairs/restkit)
 
+## 0.7.0 Update
+
+* [Resource Resolutions replaces Auth](resource/README.md)
+* [Throwable Responses](response/README.md#errors)
+* [HTTP Response Factories](response/README.md#factories)
+* [Default Response/Error Codes](response/README.md#defaults)
+* [Added PATCH HTTP Method](route/README.md#thebasics)
+* [Added @GET, @POST, @PUT, @PATCH, @DELETE aliases to @Route](route/README.md#thebasics)
+* Other Minor Cleanup
+
+---
+
 This is an experimental node rest server library using decorators.
 Developers using Java and C# frameworks are familiar with annotations when writing restful services.
 `restkit` is an attempt to bring some of those useful annotations to node rest servers.
@@ -34,9 +46,19 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [Asynchronous Requests](route/README.md#async)
 
-[Restkit Response](route/README.md#response)
+[Response](route/README.md#response)
 
 [Injectables](route/README.md#injectables)
+
+**Responses (Continued)**
+
+[Responding to Routes](response/README.md#responding)
+
+[Errors](response/README.md#errors)
+
+[Response Factories](response/README.md#factories)
+
+[Default Error/Response Codes](response/README.md#defaults)
 
 **Middleware**
 
@@ -44,11 +66,11 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [Router](middleware/README.md#router)
 
-**Auth** (In the future: Resolutions)
+**Resources**
 
-[Authentication not Authorization](auth/README.md#authentication)
+[Resolving Resources](resource/README.md#resolver)
 
-[Auth and AuthHandler](auth/README.md#authhandler)
+[Injecting Resources](resource/README.md#resolution)
 
 **Rules**
 
@@ -354,15 +376,17 @@ Expresskit.start({
 
 ## Keep Reading
 
-[Routing](route/README.md)
+[Routing](/route/README.md)
 
-[Middleware](middleware/README.md)
+[Response](/response/README.md)
 
-[Auth](auth/README.md)
+[Middleware](/middleware/README.md)
 
-[Rules](rule/README.md)
+[Resources](/resource/README.md)
 
-[DTOs](dto/README.md)
+[Rules](/rule/README.md)
+
+[DTOs](/dto/README.md)
 
 ## More Links
 

@@ -5,7 +5,7 @@ Routing
 
 [Asynchronous Requests](#async)
 
-[Restkit Response](#response)
+[Response](#response)
 
 [Injectables](#injectables)
 
@@ -42,6 +42,11 @@ export default class UserRouter {
     return 'User Updated';
   }
 
+  @Route('PATCH', '/user')
+  public static updatePartialUser(): string {
+    return 'User Partially Updated';
+  }
+
   @Route('POST', '/user')
   public static addUser(): void {
     return;
@@ -62,6 +67,40 @@ thin. Treat your router like a Controller.
 You may have noticed the router methods are static, this is for our convenience. Since
 the router and most services are stateless or act in some global capacity, static classes
 and method make sense here.
+
+You may also use the aliased decorators instead of `Route`. They act the same as `Route`
+but don't require defining the method in the first argument.
+
+```typescript
+import {GET, PUT, PATCH, POST, DELETE} from 'expresskit';
+
+export default class UserRouter {
+  @GET('/user/:id')
+  public static getUser(): Object {
+    return {};
+  }
+
+  @PUT('/user')
+  public static updateUser(): string {
+    return 'User Updated';
+  }
+
+  @PATCH('/user')
+  public static updatePartialUser(): string {
+    return 'User Partially Updated';
+  }
+
+  @POST('/user')
+  public static addUser(): void {
+    return;
+  }
+
+  @ROUTE('/user')
+  public static deleteUser(): string {
+    return 'User Deleted';
+  }
+}
+```
 
 <a name="async"></a>
 ## Asynchronous Requests
@@ -88,36 +127,40 @@ export default class UserRouter {
 ```
 
 <a name="response"></a>
-## Restkit Response
+## Response
 
 Restkit can handle responses in different ways. We've already seen it can handle
-returning values directly, and resolving values, but there are two more we should
-look at.
+returning values directly, and resolving values, but to get more control over
 
 The first is **Thrown Errors**, this may be obvious to someone familiar
-with promises as a thrown error rejects the promise. However, the way a thrown error
-is handled is to send the stack trace to the client. In other words, don't use
-error throwing as a substitution for route rejection.
+with promises as a thrown error rejects the promise. However, a thrown error is treated
+like an Internal Server Error and sends the stack trace unless a [Response](/response/README.md) is thrown.
 
-The second is the `Restkit Response`. This response is an object containing
-the `http status code` and data payload. This can be returned or resolved at any
+The second is the generically named `Response`. This response is an object containing
+the `http status code` and `data payload`. This can be returned or resolved at any
 time and has the benefit of giving you control over the returned http status code.
-Here is an example of how they are used-
 
-If that seems a little heavy handed, there will be more options in the future in the
-form of decorators. When an Restkit Response is not used a default status code is
-used:
+If a `Response` is not used, a default http code will be assigned.
 
-**200** - Is the default for any resolved/returned request with a payload.
+```typescript
+import {Route, Param, Response} from 'expresskit';
 
-**204** - Is the default for any resolved/returned request without a payload.
+export default class UserRouter {
+  @Route('GET', '/user/:id')
+  public static searchUsers(@Param('id') id: string) {
+    return Response.Ok(new User());
+    
+    return Response.Error();
 
-**400** - Is the default for any request that has missing required `injectables`
-          or fails `DTO` validation.
+    throw Response.Error();
 
-**401** - Is the default for any request that fails to resolve `authentication`.
+    return new Response(500, 'Same as Response.Error()');
+  }
+}
+```
 
-**500** - Is the default for any rejected request, thrown error, or failed `rule`.
+For more information on types of responses and Default Response/Error Codes,
+see the [Response README](/response/README.md).
 
 <a name="injectables"></a>
 ## Injectables
@@ -228,9 +271,11 @@ export class UserRouter {
 
 [Routing](/route/README.md)
 
+[Response](/response/README.md)
+
 [Middleware](/middleware/README.md)
 
-[Auth](/auth/README.md)
+[Resource Resolutions](/resource/README.md)
 
 [Rules](/rule/README.md)
 

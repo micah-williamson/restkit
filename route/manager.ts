@@ -5,13 +5,16 @@ import {Reflect} from '../reflect';
 
 import {IStaticUriPath} from './static';
 import {RestkitServer} from '../server';
-import {AuthManager} from '../auth/manager';
 import {RestkitRouter} from '../router';
 import {fatal} from '../error';
+import {RuleService} from '../rule';
+import {InjectorService} from '../injector';
+import {DTOManager} from '../dto';
+import {Response, ResponseService} from '../response';
 
 var path = require('path');
 
-export type RouteMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type RouteMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface IRouter {
   mount: string;
@@ -30,6 +33,29 @@ export class RouteManager {
   public static routers: IRouter[] = [];
 
   public static routes: IRoute[] = [];
+
+  /**
+   * Runs rules, dto validation, and injection on the route with the given context
+   */
+  public static runRoute(route: IRoute, ctx: any): Promise<Response> {
+    return new Promise((resolve) => {
+      let rules = Reflect.getMetadata('Rules', route.object, route.key) || [];
+      
+      RuleService.runRules(rules, ctx).then(() => {
+        return InjectorService.run(route.object, route.key, ctx);
+      }).then((response: Response) => {
+        let responseType = Reflect.getMetadata('ResponseType', route.object, route.key);
+        if(responseType) {
+          DTOManager.scrubOut(response.data, responseType);
+        }
+
+        resolve(response);
+      }).catch((response: Response) => {
+        resolve(response);
+      });
+    });
+    
+  }
 
   /**
    * Registers a router with the route manager. Has no function other than handling middleware
@@ -199,6 +225,8 @@ export class RouteManager {
         return application.post;
       case 'DELETE':
         return application.delete;
+      case 'PATCH':
+        return application.patch;
     }
 
     return;
