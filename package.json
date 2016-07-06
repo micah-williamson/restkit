@@ -1,7 +1,7 @@
 {
   "name": "restkit",
-  "version": "0.6.0",
-  "description": "a rest toolkit for node servers",
+  "version": "0.7.0",
+  "description": "A toolkit for node servers that adds Decorators, Rules, and Injectables.",
   "main": "bld/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

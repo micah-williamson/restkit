@@ -16,10 +16,10 @@ all the options of respoding to a request.
 <a name="responding"></a>
 ## Responding to Routes
 
-All returned and resolved values that are now `Response` objects will be converted
+All returned and resolved values that are not `Response` objects will be converted
 to `Response` objects at some point. When this happens, if your route does not
 specify the type of response, a default will be chosen from the context. The
-defaults and there conditions are-
+defaults and their conditions are-
 
 **200** - Is the default for any resolved/returned request with a payload.
 
@@ -32,7 +32,7 @@ defaults and there conditions are-
 or failed `resource resolution`.
 
 For more control over the status code, the generically named `Response` object
-should be used. When creating a response you should provide the http status code
+should be used. When creating a response, you should provide the http status code
 as well as the data to be sent to the client.
 
 ```typescript
@@ -69,7 +69,8 @@ return new Response(500, 'something bad happened');
 
 Under two conditions will an error be **assumed**. Those conditions are if the route
 encounters a `Thrown Error` or `Rejected Promise`. In these cases, the status code
-will default to a `500 Internal Server Error`.
+will default to a `500 Internal Server Error`. However, a thrown `Error` is not the
+same as a thrown `Resposne`.
 
 ```typescript
 import {Route} from 'expresskit';
@@ -86,9 +87,8 @@ export class FooRouter {
 }
 ```
 
-Throwing an error and and rejecting a promise are not the same in this scenario.
 If an error is thrown, it assumed that there is an actual runtime error and the
-stacktrace will be returned. You can throw intended errors by throwing a Response.
+stacktrace will be returned. You can throw intended errors by throwing a `Response`.
 
 ```typescript
 import {Route, Response} from 'expresskit';
@@ -159,10 +159,10 @@ The available factories and their values are-
 
 Returning a `Response` should be used if the route or rule may return different
 types of responses. For everything else, use the `ResponseCode` and `ErrorCode`
-decorators. These decorators override the default response codes for success and
-error responses.
-
-ResponseCodes and ErrorCodes can be added to any injectable method.
+decorators if you don't intended to use the defaults. These decorators override
+the default response codes for success and error responses. Only one default
+response code and error code can be used for a particular `Route`, `Rule`, or
+`Resolver`.
 
 ```typescript
 import {Route, Param, Resolver, ResponseCode, ErrorCode} from 'expresskit';
@@ -214,3 +214,29 @@ export class WidgetRouter {
     // update widget
   }
 ```
+
+## Keep Reading
+
+[Routing](/route/README.md)
+
+[Response](/response/README.md)
+
+[Middleware](/middleware/README.md)
+
+[Resource Resolutions](/resource/README.md)
+
+[Rules](/rule/README.md)
+
+[DTOs](/dto/README.md)
+
+## More Links
+
+[Restkit Seed Project](https://github.com/iamchairs/restkit-seed)
+
+[Github](https://github.com/iamchairs/restkit)
+
+[Issues](https://github.com/iamchairs/restkit/issues)
+
+[NPM](https://www.npmjs.com/package/restkit)
+
+[Twitter](https://twitter.com/micahwllmsn)

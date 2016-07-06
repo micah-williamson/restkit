@@ -171,7 +171,7 @@ this will be fixed with `Resolutions` in a future update.
 
 [Middleware](/middleware/README.md)
 
-[Resources](/resource/README.md)
+[Resource Resolutions](/resource/README.md)
 
 [Rules](/rule/README.md)
 

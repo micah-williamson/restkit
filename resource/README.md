@@ -1,12 +1,12 @@
-Resolution
-----------
+Resource Resolutions
+--------------------
 
 Custom injectable resolutions can be created by defining a named `Resolver`.
 Resolutions can be used to reduce the amount of redundant queries/fetches for
 resources.
 
 ```typescript
-import {Route, Param, Body, Resolver, Resolution} from 'expresskit';
+import {Route, Param, Body, Resolver, Resource} from 'expresskit';
 
 public UserService {
   @Resolver('User')
@@ -14,8 +14,6 @@ public UserService {
     // ... query the database and return the user
   }
 }
-
-
 
 ```
 
@@ -28,7 +26,7 @@ public UserService {
 <a name="resolver"></a>
 ## Resolving Resources
 
-To create a resolution you need a method that will act as the resolver of that
+To create a Resource Resolution you need a method that will act as the resolver of that
 resource. This can be any method decoratorated with the `Resolver` decorator.
 Resolvers must be registered with the name of the resource they are resolving,
 and must be unique to the application. In other words, you can't have multiple
@@ -39,7 +37,7 @@ properties from the request. This is necessary to pull the correct resources
 given the context of the request.
 
 ```typescript
-import {Route, Param, Body, Resolver, Resolution} from 'expresskit';
+import {Route, Param, Body, Resolver} from 'expresskit';
 
 public UserService {
   @Resolver('User')
@@ -68,7 +66,7 @@ public UserService {
 
 public UserRouter {
   @Route('PUT', '/user/:userId')
-  public static updateUser(@Resolution('User') user: User, @Body(User) update: User) {
+  public static updateUser(@Resource('User') user: User, @Body(User) update: User) {
     // ... You now have access to the actual user resource and the update resource
   }
 }
@@ -77,8 +75,8 @@ public UserRouter {
 <a name="redundant"></a>
 ## Redundant Resolutions
 
-As of the current version, resolutions or resolved redundantly. In a future update
-resolution caching will be implemented.
+As of the current version, resources or resolved redundantly. In a future update,
+resource caching will be implemented.
 
 ## Keep Reading
 
@@ -88,7 +86,7 @@ resolution caching will be implemented.
 
 [Middleware](/middleware/README.md)
 
-[Resources](/resource/README.md)
+[Resource Resolutions](/resource/README.md)
 
 [Rules](/rule/README.md)
 

@@ -6,8 +6,9 @@
 * [Throwable Responses](response/README.md#errors)
 * [HTTP Response Factories](response/README.md#factories)
 * [Default Response/Error Codes](response/README.md#defaults)
-* [Added PATCH HTTP Method](route/README.md#methods)
-* [Added @GET, @POST, @PUT, @PATCH, @DELETE aliases to @Route](route/README.md#methods)
+* [Added PATCH HTTP Method](route/README.md#thebasics)
+* [Added @GET, @POST, @PUT, @PATCH, @DELETE aliases to @Route](route/README.md#thebasics)
+* Other Minor Cleanup
 
 ---
 
