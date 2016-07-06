@@ -167,9 +167,11 @@ this will be fixed with `Resolutions` in a future update.
 
 [Routing](/route/README.md)
 
+[Response](/response/README.md)
+
 [Middleware](/middleware/README.md)
 
-[Auth](/auth/README.md)
+[Resources](/resource/README.md)
 
 [Rules](/rule/README.md)
 

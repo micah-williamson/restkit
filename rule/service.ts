@@ -72,25 +72,31 @@ export class RuleService {
       let promises: Promise<any>[] = [];
       let running = 0;
 
-      ruleBranch.forEach((resolverName) => {
+      for(var i = 0; i < ruleBranch.length; i++) {
+        let resolverName = ruleBranch[i];
         let handler = this.getHandlerByName(resolverName);
 
-        let promise = new Promise((branchResolve, branchReject) => {
-          // Rule branches are OR operations. One pass succeeds
-          InjectorService.run(handler.object, handler.method, context).then((response: any) => {
-            if(response instanceof Response && ResponseService.isError(response)) {
+        if(handler) {
+          let promise = new Promise((branchResolve, branchReject) => {
+            // Rule branches are OR operations. One pass succeeds
+            InjectorService.run(handler.object, handler.method, context).then((response: any) => {
+              if(response instanceof Response && ResponseService.isError(response)) {
+                branchReject(response);
+              } else {
+                resolve();
+                branchResolve();
+              }
+            }).catch((response: any) => {
               branchReject(response);
-            } else {
-              resolve();
-              branchResolve();
-            }
-          }).catch((response: any) => {
-            branchReject(response);
+            });
           });
-        });
 
-        promises.push(promise);
-      });
+          promises.push(promise);
+        } else {
+          reject(Response.Error(`Rule '${resolverName}' doesn't exist.`));
+          return;
+        }
+      }
 
       // All promises must fail to fail the branch
       Promise.all(promises).catch((response: any) => {

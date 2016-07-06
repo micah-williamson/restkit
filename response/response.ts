@@ -45,28 +45,6 @@ The 204 response MUST NOT include a message-body, and thus is always terminated 
   }
 
   /**
-   * The requested resource has been assigned a new permanent URI and any future references to this resource SHOULD use one of the returned URIs. Clients with link editing capabilities ought to automatically re-link references to the Request-URI to one or more of the new references returned by the server, where possible. This response is cacheable unless indicated otherwise.
-
-The new permanent URI SHOULD be given by the Location field in the response. Unless the request method was HEAD, the entity of the response SHOULD contain a short hypertext note with a hyperlink to the new URI(s).
-
-If the 301 status code is received in response to a request other than GET or HEAD, the user agent MUST NOT automatically redirect the request unless it can be confirmed by the user, since this might change the conditions under which the request was issued.
-   */
-  public static Moved(url: string) {
-    return new Response(301, url);
-  }
-
-  /**
-   * The requested resource resides temporarily under a different URI. Since the redirection MAY be altered on occasion, the client SHOULD continue to use the Request-URI for future requests. This response is only cacheable if indicated by a Cache-Control or Expires header field.
-
-The temporary URI SHOULD be given by the Location field in the response. Unless the request method was HEAD, the entity of the response SHOULD contain a short hypertext note with a hyperlink to the new URI(s) , since many pre-HTTP/1.1 user agents do not understand the 307 status. Therefore, the note SHOULD contain the information necessary for a user to repeat the original request on the new URI.
-
-If the 307 status code is received in response to a request other than GET or HEAD, the user agent MUST NOT automatically redirect the request unless it can be confirmed by the user, since this might change the conditions under which the request was issued.
-   */
-  public static Redirect(url: string) {
-    return new Response(307, url);
-  }
-
-  /**
    * The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.
    */
   public static BadRequest(data: any = 'Bad Request') {
@@ -172,7 +150,7 @@ The 410 response is primarily intended to assist the task of web maintenance by 
       server must use it when becoming overloaded. Some servers may wish
       to simply refuse the connection
    */
-  public static TemporarilyUnavailable(data: any = 'Service Temporarily Unavailable') {
+  public static TemporarilyUnavailable(data: any = 'Temporarily Unavailable') {
     return new Response(503, data);
   }
 
