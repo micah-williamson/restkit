@@ -20,8 +20,6 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 
 [Prerequisites](#prerequisites)
 
-[Get Restkit](#getrestkit)
-
 [tsconfig](#tsconfig)
 
 [Server Support](#serversupport)
@@ -96,15 +94,6 @@ Developers using Java and C# frameworks are familiar with annotations when writi
 [Typescript >1.8.0](https://www.npmjs.com/package/typescript)
 
 [ntypescript](https://www.npmjs.com/package/ntypescript)
-
-<a name="getrestkit"></a>
-## Get Restkit
-
-Using npm to install restkit in the root of your server application.
-
-```
-npm install --save restkit
-```
 
 <a name="tsconfig"></a>
 ## tsconfig
@@ -390,7 +379,7 @@ Expresskit.start({
 
 ## More Links
 
-[Restkit Seed Project](https://github.com/iamchairs/restkit-seed)
+[Expresskit Seed Project](https://github.com/iamchairs/expresskit-seed)
 
 [Github](https://github.com/iamchairs/restkit)
 

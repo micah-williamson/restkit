@@ -283,7 +283,7 @@ export class UserRouter {
 
 ## More Links
 
-[Restkit Seed Project](https://github.com/iamchairs/restkit-seed)
+[Expresskit Seed Project](https://github.com/iamchairs/expresskit-seed)
 
 [Github](https://github.com/iamchairs/restkit)
 
