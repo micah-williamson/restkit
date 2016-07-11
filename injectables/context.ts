@@ -1,4 +1,4 @@
-import {InjectorService} from '../injector/service';
+import {InjectorService} from '../injector';
 import {IInjectable, IInjectionConfig, IInjectionResolver} from '../injector';
 import {RestkitServer} from '../server';
 

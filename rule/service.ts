@@ -1,7 +1,7 @@
 import {fatal} from '../error';
 import {Response, ResponseService} from '../response';
-import {IRoute} from '../route/manager';
-import {InjectorService} from '../injector/service';
+import {IRoute} from '../route';
+import {InjectorService} from '../injector';
 
 export class IRuleHandler {
   public name: string;

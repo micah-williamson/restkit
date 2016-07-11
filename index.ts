@@ -1,4 +1,6 @@
-export {Restkit} from './restkit';
+import './reflect';
+
+export {Restkit, IRestkitConfig} from './restkit';
 export {Reflect} from './reflect';
 export * from './resource';
 export * from './dto';
@@ -11,3 +13,4 @@ export * from './route';
 export * from './router';
 export * from './rule';
 export * from './server';
+export * from './dataType';

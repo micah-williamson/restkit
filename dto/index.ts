@@ -3,3 +3,4 @@ export {ResponseType} from './responseType';
 export {ScrubIn} from './scrubIn';
 export {ScrubOut} from './scrubOut';
 export {DTOManager} from './manager';
+export * from './integer';

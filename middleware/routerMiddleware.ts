@@ -1,6 +1,6 @@
 import {Reflect} from '../reflect';
 
-import {RouteManager} from '../route/manager';
+import {RouteManager} from '../route';
 
 export function RouterMiddleware(method: any) {
   return function (object: any) {

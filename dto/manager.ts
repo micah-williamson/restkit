@@ -1,5 +1,6 @@
 import {Reflect} from '../reflect';
 import {fatal} from '../error';
+import {DataType} from '../dataType/datatype';
 
 export type ValidationDataTypes = 'string' | 'number' | 'object' | 'array';
 
@@ -22,7 +23,31 @@ export interface IValidationRules extends IValidationTags {
 }
 
 export class DTOManager {
+
+  public static dataTypes: Array<DataType<any>> = [];
   
+  public static registerDataType(dataType: DataType<any>) {
+    let type = dataType.type;
+    let existingType = this.getDataTypeByType(type);
+
+    if(!existingType) {
+      this.dataTypes.push(dataType);
+    } else {
+      fatal(new Error(`Failed to register data type: ${type.name || type}. This data type is already registered`));
+    }
+  }
+
+  public static getDataTypeByType(type: any) {
+    for(var i = 0; i < this.dataTypes.length; i++) {
+      let dataType = this.dataTypes[i];
+      if(dataType.type === type) {
+        return dataType;
+      }
+    }
+
+    return null;
+  }
+
   /**
    * Validates DTOs coming IN (from the client)
    */

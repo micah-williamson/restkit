@@ -43,21 +43,52 @@ export class Restkit {
       this.initDefaultRestkitConfig(config);
       
       process.env.TZ = config.timezone;
+      this.resolveMiddleware(config.middleware).then((middlewares: any[]) => {
+        this.bindMiddleware(middlewares);
 
-      config.middleware.forEach((middleware) => {
-        this.server.use(middleware);
-      });  
+        RouteManager.bindStaticPaths(this.server, config.staticPaths);
+        RouteManager.bindStaticFiles(this.server, config.staticFiles);
+        RouteManager.bindRoutes(this.server);
 
-      RouteManager.bindStaticPaths(this.server, config.staticPaths);
-      RouteManager.bindStaticFiles(this.server, config.staticFiles);
-      RouteManager.bindRoutes(this.server);
-
-      this.server.listen(config.port, () => {
-        console.log(`Started server on port ${config.port}`);
-        resolve();
-      })
+        this.server.listen(config.port, () => {
+          console.log(`Started server on port ${config.port}`);
+          resolve(config);
+        })
+      }).catch((err: any) => {
+        reject(err);
+      });
     }).catch((err: any) => {
       fatal(err);
+    });
+  }
+
+  public static async resolveMiddleware(middlewares: any[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let promises: Promise<any>[] = [];
+
+      middlewares.forEach((middleware) => {
+        if(middleware instanceof Promise) {
+          promises.push(middleware);
+        } else {
+          promises.push(Promise.resolve(middleware));
+        }
+      });
+
+      Promise.all(promises).then((resolvedMiddleware) => {
+        resolve(resolvedMiddleware);
+      }).catch((err: any) => {
+        reject(err);
+      });
+    });
+  }
+
+  public static async bindMiddleware(middlewares: any[]): Promise<any> {
+    middlewares.forEach((middleware) => {
+      if(middleware instanceof Array) {
+        this.bindMiddleware(middleware);
+      } else {
+        this.server.use(middleware);
+      }
     });
   }
 
